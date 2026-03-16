@@ -1,6 +1,6 @@
 # save-read
 
-Save web content as markdown to your Obsidian vault/somewhere locally. Supports blogs, Twitter/X, Hacker News threads, and Reddit threads.
+Save web content as markdown to your Obsidian vault/somewhere locally.
 
 ## Setup
 

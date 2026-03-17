@@ -3,10 +3,11 @@
 
 import argparse
 import re
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 
 import requests
 from bs4 import BeautifulSoup
@@ -22,7 +23,7 @@ HEADERS = {
 }
 
 # Sites that need a real browser (JS rendering) to get content
-JS_REQUIRED_DOMAINS = {"twitter.com", "x.com", "old.reddit.com"}
+JS_REQUIRED_DOMAINS = {"twitter.com", "x.com", "old.reddit.com", "substack.com"}
 
 
 def detect_source(url: str) -> str:
@@ -241,6 +242,11 @@ def main():
 
     filepath = save(title, content, url, source, args.tags)
     print(f"Saved: {filepath}")
+
+    # Open the file in Obsidian
+    relative_path = filepath.relative_to(SAVE_DIR.parent)
+    obsidian_uri = f"obsidian://open?vault=obsidian&file={quote(str(relative_path))}"
+    subprocess.run(["open", obsidian_uri])
 
 
 if __name__ == "__main__":
